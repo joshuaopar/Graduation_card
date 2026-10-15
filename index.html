@@ -70,6 +70,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
 .btn{display:block;width:100%;text-align:center;padding:15px;border-radius:12px;border:0;font-family:var(--disp);letter-spacing:.1em;text-transform:uppercase;font-size:14px;font-weight:700;background:linear-gradient(90deg,var(--gold),var(--gold2));color:var(--btn-ink);cursor:pointer;text-decoration:none}
 .btn.alt{background:transparent;border:1px solid var(--gold);color:var(--gold2)}
 .private{margin-top:18px;font-size:15px;color:var(--muted);font-style:italic}
+.thanks{margin:16px 0 0;font-size:20px;color:var(--gold2);font-style:italic}
 .foot{margin-top:24px;font-family:var(--script);font-size:32px;color:var(--gold2);line-height:1.1}
 @media (max-width:420px){.script{font-size:50px}.inner{padding:34px 16px 26px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
@@ -123,8 +124,9 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
       </div></div>
     <div><label for="c">Contribution sent: amount and method (optional)</label><input id="c" placeholder="e.g. UGX 50,000 via Mobile Money"></div>
     <div><label for="m">A word for the graduate</label><textarea id="m" rows="3" placeholder="Write a warm wish..."></textarea></div>
-    <button class="btn" type="submit">Send reply by email</button>
+    <button class="btn" type="submit" id="send">Send reply</button>
   </form>
+  <p class="thanks" id="status"></p>
   <p class="private">This invitation is personal to you. Because we are keeping things small, we kindly ask that you come on your own.</p>
 
   <p class="foot">With love &amp; gratitude, Opar Joshua</p>
@@ -132,7 +134,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
 
 <script>
 // ===== EDIT THESE =====
-var CFG = { email:"Joshuaopar7@gmail.com", whatsapp:"256700000000", eventDate:"2026-11-08T14:00:00+03:00" };
+var CFG = { email:"Joshuaopar7@gmail.com", eventDate:"2026-11-08T14:00:00+03:00" };
 // ======================
 var sp=document.getElementById("sp");
 for(var i=0;i<22;i++){var s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";s.style.animationDelay=(Math.random()*5)+"s";s.style.animationDuration=(3+Math.random()*4)+"s";sp.appendChild(s)}
@@ -148,12 +150,30 @@ document.querySelectorAll(".copy").forEach(function(b){b.addEventListener("click
   try{navigator.clipboard.writeText(n).then(function(){b.textContent="Copied ✓"},function(){b.textContent=n})}catch(e){b.textContent=n}
   setTimeout(function(){if(b.textContent!=="Copy")b.textContent="Copy"},2500);
 })});
-function body(){
-  var v=function(i){return document.getElementById(i).value},a=document.querySelector("input[name=a]:checked").value;
-  return "RSVP – Graduation Celebration\n\nName: "+v("n")+"\nPhone: "+v("p")+"\nResponse: "+a+"\nContribution: "+(v("c")||"-")+"\nMessage: "+v("m");
-}
-document.getElementById("rsvp").addEventListener("submit",function(e){e.preventDefault();location.href="mailto:"+CFG.email+"?subject="+encodeURIComponent("RSVP: "+document.getElementById("n").value+" - "+(document.querySelector("input[name=a]:checked").value.indexOf("Yes")===0?"ACCEPTED":"DECLINED")+(document.getElementById("c").value?" - CONTRIBUTED":""))+"&body="+encodeURIComponent(body())});
-
+document.getElementById("rsvp").addEventListener("submit",function(e){
+  e.preventDefault();
+  var v=function(i){return document.getElementById(i).value};
+  var a=document.querySelector("input[name=a]:checked").value, yes=a.indexOf("Yes")===0, who=v("n");
+  var btn=document.getElementById("send"), msg=document.getElementById("status"), form=document.getElementById("rsvp");
+  btn.disabled=true; btn.textContent="Sending..."; msg.textContent="";
+  fetch("https://formsubmit.co/ajax/"+CFG.email,{
+    method:"POST",
+    headers:{"Content-Type":"application/json","Accept":"application/json"},
+    body:JSON.stringify({
+      _subject:"RSVP: "+who+" - "+(yes?"ACCEPTED":"DECLINED")+(v("c")?" - CONTRIBUTED":""),
+      _template:"table", _captcha:"false",
+      Name:who, Phone:v("p")||"-", Response:a, Contribution:v("c")||"-", Message:v("m")||"-"
+    })
+  }).then(function(r){return r.json()}).then(function(d){
+    if(d.success===true||d.success==="true"){
+      form.style.display="none";
+      msg.textContent=yes?("Thank you, "+who+"! Your reply has been sent. We look forward to celebrating with you."):("Thank you, "+who+". Your reply has been sent. You will be missed.");
+    }else{throw new Error("fail")}
+  }).catch(function(){
+    btn.disabled=false; btn.textContent="Send reply";
+    msg.textContent="Sorry, your reply did not send. Please check your internet and try again.";
+  });
+});
 </script>
 </body>
 </html>
