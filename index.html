@@ -77,7 +77,6 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
 .welcome .cap2{font-size:64px;animation:fl 3.5s ease-in-out infinite}
 .welcome .name{margin:14px 0 0}
 .welcome .btn{width:auto;display:inline-block;padding:16px 30px;margin-top:34px}
-.welcome .hint{margin:14px 0 0;font-size:15px;color:var(--muted);font-style:italic}
 .mus{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;width:48px;height:48px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold2);font-size:20px;cursor:pointer;display:none;box-shadow:0 6px 18px rgba(0,0,0,.35)}
 .mus.show{display:block}
 @media (max-width:420px){.script{font-size:50px}.inner{padding:34px 16px 26px}}
@@ -92,7 +91,6 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
   <p class="disp">Thanksgiving &amp; Celebration</p>
   <p class="name">OPAR JOSHUA</p>
   <button class="btn" id="open" type="button">💌 Tap to open</button>
-  <p class="hint">Best enjoyed with the sound on 🔊</p>
 </div>
 <button class="mus" id="mus" type="button" aria-label="Turn music on or off">🔊</button>
 <audio id="song" src="music.mp3" loop preload="none"></audio>
@@ -112,7 +110,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
   <div class="orn">✦</div>
 
   <div class="details">
-    <div class="row"><span class="ico">📅</span><div><b>Date</b><span>Sunday, 28th November 2026</span></div></div>
+    <div class="row"><span class="ico">📅</span><div><b>Date</b><span>Saturday, 28 November 2026</span></div></div>
     <div class="row"><span class="ico">🕑</span><div><b>Time</b><span>2:00 PM – 6:00 PM</span></div></div>
     <div class="row"><span class="ico">📍</span><div><b>Venue</b><span>Kololo, Kampala</span></div></div>
     <div class="row"><span class="ico">👗</span><div><b>Dress</b><span>Smart &amp; elegant</span></div></div>
@@ -132,7 +130,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
 
   <div class="orn">✦</div>
   <h2>Kindly Reply</h2>
-  <p class="small">Please respond before 1 November 2026 so we can prepare for you.</p>
+  <p class="small">Please respond before 20 November 2026 so we can prepare for you.</p>
   <form id="rsvp">
     <div><label for="n">Your name</label><input id="n" required placeholder="Full name"></div>
     <div><label for="p">Phone / WhatsApp</label><input id="p" type="tel" placeholder="+256 ..."></div>
@@ -153,7 +151,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
 
 <script>
 // ===== EDIT THESE =====
-var CFG = { email:"Joshuaopar7@gmail.com", eventDate:"2026-11-08T14:00:00+03:00" };
+var CFG = { email:"Joshuaopar7@gmail.com", eventDate:"2026-11-28T14:00:00+03:00" };
 // ======================
 var sp=document.getElementById("sp");
 for(var i=0;i<22;i++){var s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";s.style.animationDelay=(Math.random()*5)+"s";s.style.animationDuration=(3+Math.random()*4)+"s";sp.appendChild(s)}
