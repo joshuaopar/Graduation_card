@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>You're Invited – Graduation Celebration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#04211a; --bg2:#0f4a37; --card:#0a3226; --ink:#f8f2e2; --muted:#b5d1c4;
+  --gold:#d9b25f; --gold2:#f4dc9b; --line:rgba(217,178,95,.38); --field:rgba(255,255,255,.06); --btn-ink:#1a1405; --glow:rgba(217,178,95,.18);
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif; --disp:"Playfair Display",Georgia,serif; --script:"Great Vibes","Brush Script MT",cursive;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){--bg1:#f4f1df;--bg2:#d9e6cc;--card:#fffdf6;--ink:#0e3a2b;--muted:#4d6b5d;--gold:#a67c25;--gold2:#c79b3b;--line:rgba(166,124,37,.45);--field:#fbf5e4;--btn-ink:#fff;--glow:rgba(166,124,37,.15)}
+}
+:root[data-theme="light"]{--bg1:#f4f1df;--bg2:#d9e6cc;--card:#fffdf6;--ink:#0e3a2b;--muted:#4d6b5d;--gold:#a67c25;--gold2:#c79b3b;--line:rgba(166,124,37,.45);--field:#fbf5e4;--btn-ink:#fff;--glow:rgba(166,124,37,.15)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.5;display:flex;justify-content:center;padding:22px 14px;
+  background:radial-gradient(circle at 20% 0%,var(--bg2),transparent 55%),radial-gradient(circle at 90% 100%,var(--bg2),transparent 50%),var(--bg1);background-attachment:fixed}
+.sparkles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.sparkles i{position:absolute;width:6px;height:6px;background:var(--gold2);border-radius:50%;opacity:0;animation:tw 5s infinite}
+@keyframes tw{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:.8;transform:scale(1.2)}}
+.card{position:relative;z-index:1;width:100%;max-width:540px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px;box-shadow:0 30px 70px rgba(0,0,0,.35),0 0 0 6px var(--glow);animation:rise .9s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.inner{border:1px solid var(--line);border-radius:14px;padding:38px 24px 30px;text-align:center;position:relative}
+.inner:before,.inner:after{content:"❖";position:absolute;top:10px;color:var(--gold);font-size:14px}
+.inner:before{left:14px}.inner:after{right:14px}
+.mono{width:104px;height:104px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-family:var(--script);font-size:64px;color:var(--btn-ink);background:conic-gradient(from 200deg,var(--gold),var(--gold2),var(--gold),var(--gold2),var(--gold));box-shadow:0 0 0 5px var(--card),0 0 0 6px var(--line),0 10px 30px var(--glow)}
+.crest{position:relative;width:150px;margin:34px auto 18px}.crest:before,.crest:after{content:"❦";position:absolute;top:42px;font-size:26px;color:var(--gold)}.crest:before{left:-34px;transform:scaleX(-1)}.crest:after{right:-34px}.cap{position:absolute;left:0;right:0;top:-34px;text-align:center;font-size:46px;z-index:2;animation:fl 3.5s ease-in-out infinite;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}.crest .mono{width:116px;height:116px;margin:0 auto;font-size:72px}
+@keyframes fl{50%{transform:translateY(-6px) rotate(-4deg)}}
+.eyebrow{letter-spacing:.38em;text-transform:uppercase;font-size:12px;color:var(--gold);margin:4px 0 8px;font-weight:600}
+.script{font-family:var(--script);font-size:60px;line-height:1;margin:0;background:linear-gradient(90deg,var(--gold),var(--gold2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.disp{font-family:var(--disp);letter-spacing:.14em;text-transform:uppercase;font-size:17px;margin:6px 0 0}
+.sub{color:var(--muted);margin:10px auto 0;max-width:380px;font-size:18px;font-style:italic}
+.name{font-family:var(--disp);font-size:28px;margin:24px 0 4px;letter-spacing:.06em}
+.deg{color:var(--muted);font-size:16px;margin:0}
+.orn{display:flex;align-items:center;gap:10px;color:var(--gold);margin:26px 0;font-size:14px}
+.orn:before,.orn:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.quote{font-style:italic;color:var(--muted);margin:0;font-size:18px}
+.details{display:grid;gap:14px;text-align:left}
+.row{display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--field)}
+.ico{font-size:22px;width:30px;text-align:center}
+.row b{display:block;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+.row span{font-size:19px}
+.count{display:flex;justify-content:center;gap:10px}
+.count div{min-width:70px;border:1px solid var(--line);border-radius:12px;padding:8px 4px;background:var(--field)}
+.count strong{display:block;font-family:var(--disp);font-size:26px;color:var(--gold2)}
+.count small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+h2{font-family:var(--script);font-weight:normal;font-size:44px;margin:0;color:var(--gold2);line-height:1.1}
+.small{color:var(--muted);font-size:16px;margin:8px auto 0;max-width:400px}
+.gift{margin-top:16px;border:1px dashed var(--gold);border-radius:14px;padding:16px;background:var(--field);text-align:left}
+.gift h3{margin:0 0 4px;font-family:var(--disp);font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.gift p{margin:0 0 12px;color:var(--muted);font-size:16px}
+.pay{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-top:8px}
+.pay small{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.pay strong{font-family:var(--disp);font-size:17px;letter-spacing:.04em}
+.copy{border:1px solid var(--gold);background:transparent;color:var(--gold2);border-radius:8px;padding:8px 12px;font:inherit;font-size:14px;cursor:pointer}
+form{text-align:left;display:grid;gap:14px;margin-top:16px}
+label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);font-weight:600}
+input,textarea{width:100%;margin-top:5px;padding:12px;font:inherit;font-size:17px;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:10px}
+input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.choice{display:flex;gap:8px;margin-top:5px}
+.choice label{flex:1;margin:0;text-transform:none;letter-spacing:0;font-size:16px;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:11px 6px;text-align:center;cursor:pointer;font-weight:400}
+.choice input{display:none}
+.choice label:has(input:checked){background:var(--gold);color:var(--btn-ink);font-weight:600}
+.btn{display:block;width:100%;text-align:center;padding:15px;border-radius:12px;border:0;font-family:var(--disp);letter-spacing:.1em;text-transform:uppercase;font-size:14px;font-weight:700;background:linear-gradient(90deg,var(--gold),var(--gold2));color:var(--btn-ink);cursor:pointer;text-decoration:none}
+.btn.alt{background:transparent;border:1px solid var(--gold);color:var(--gold2)}
+.private{margin-top:18px;font-size:15px;color:var(--muted);font-style:italic}
+.foot{margin-top:24px;font-family:var(--script);font-size:32px;color:var(--gold2);line-height:1.1}
+@media (max-width:420px){.script{font-size:50px}.inner{padding:34px 16px 26px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="sparkles" id="sp"></div>
+<main class="card"><div class="inner">
+
+  <div class="crest"><span class="cap">🎓</span><div class="mono">J</div></div>
+  <p class="eyebrow">You are warmly invited</p>
+  <p class="script">Graduation</p>
+  <p class="disp">Thanksgiving &amp; Celebration</p>
+  <p class="sub">A small, intimate gathering of family and a few close friends, to give thanks and celebrate this milestone together.</p>
+
+  <p class="name">JOSHUA</p>
+  <p class="deg">Diploma in Information Technology for Business<br>Uganda Institute of Information and Communications Technology</p>
+
+  <div class="orn">✦</div>
+  <p class="quote">“I could not have walked this road alone. Your presence will mean the world to me.”</p>
+  <div class="orn">✦</div>
+
+  <div class="details">
+    <div class="row"><span class="ico">📅</span><div><b>Date</b><span>Sunday, 8 November 2026</span></div></div>
+    <div class="row"><span class="ico">🕑</span><div><b>Time</b><span>2:00 PM – 6:00 PM</span></div></div>
+    <div class="row"><span class="ico">📍</span><div><b>Venue</b><span>Kololo, Kampala</span></div></div>
+    <div class="row"><span class="ico">👗</span><div><b>Dress</b><span>Smart &amp; elegant</span></div></div>
+  </div>
+
+  <div class="orn">✦</div>
+  <div class="count" id="count"></div>
+
+  <div class="orn">✦</div>
+  <h2>Support the Celebration</h2>
+  <p class="small">Your presence is already the greatest gift. If you wish to stand with me in prayer and support, any contribution towards the celebration will be received with deep gratitude, whatever you are able to give.</p>
+  <div class="gift">
+    <h3>Send a contribution</h3>
+    <p>Mobile money — account name: <b>Nyingalingi Proscovia</b></p>
+    
+    <div class="pay"><div><small>Mobile Money</small><strong>0704 529 389</strong></div><button class="copy" data-n="0704529389" type="button">Copy</button></div>
+  </div>
+
+  <div class="orn">✦</div>
+  <h2>Kindly Reply</h2>
+  <p class="small">Please respond before 1 November 2026 so we can prepare for you.</p>
+  <form id="rsvp">
+    <div><label for="n">Your name</label><input id="n" required placeholder="Full name"></div>
+    <div><label for="p">Phone / WhatsApp</label><input id="p" type="tel" placeholder="+256 ..."></div>
+    <div><label>Will you join us?</label>
+      <div class="choice">
+        <label><input type="radio" name="a" value="Yes, I will attend" checked>Joyfully accept</label>
+        <label><input type="radio" name="a" value="Sorry, I cannot attend">Regretfully decline</label>
+      </div></div>
+    <div><label for="c">Contribution I have sent (optional)</label><input id="c" placeholder="e.g. UGX 50,000 via MTN"></div>
+    <div><label for="m">A word for the graduate</label><textarea id="m" rows="3" placeholder="Write a warm wish..."></textarea></div>
+    <button class="btn" type="submit">Send reply by email</button>
+    <a class="btn alt" id="wa" href="#" target="_blank" rel="noopener">Reply on WhatsApp</a>
+  </form>
+  <p class="private">This invitation is personal to you. Because we are keeping things small, we kindly ask that you come on your own.</p>
+
+  <p class="foot">With love &amp; gratitude, Joshua</p>
+</div></main>
+
+<script>
+// ===== EDIT THESE =====
+var CFG = { email:"your-email@example.com", whatsapp:"256700000000", eventDate:"2026-11-08T14:00:00+03:00" };
+// ======================
+var sp=document.getElementById("sp");
+for(var i=0;i<22;i++){var s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";s.style.animationDelay=(Math.random()*5)+"s";s.style.animationDuration=(3+Math.random()*4)+"s";sp.appendChild(s)}
+function tick(){
+  var d=new Date(CFG.eventDate)-new Date(),el=document.getElementById("count");
+  if(d<=0){el.textContent="It's celebration time! 🎉";return}
+  var s=Math.floor(d/1000),D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60);
+  el.innerHTML=[[D,"Days"],[H,"Hours"],[M,"Mins"]].map(function(x){return "<div><strong>"+x[0]+"</strong><small>"+x[1]+"</small></div>"}).join("");
+}
+tick();setInterval(tick,30000);
+document.querySelectorAll(".copy").forEach(function(b){b.addEventListener("click",function(){
+  var n=b.getAttribute("data-n");
+  try{navigator.clipboard.writeText(n).then(function(){b.textContent="Copied ✓"},function(){b.textContent=n})}catch(e){b.textContent=n}
+  setTimeout(function(){if(b.textContent!=="Copy")b.textContent="Copy"},2500);
+})});
+function body(){
+  var v=function(i){return document.getElementById(i).value},a=document.querySelector("input[name=a]:checked").value;
+  return "RSVP – Graduation Celebration\n\nName: "+v("n")+"\nPhone: "+v("p")+"\nResponse: "+a+"\nContribution: "+(v("c")||"-")+"\nMessage: "+v("m");
+}
+document.getElementById("rsvp").addEventListener("submit",function(e){e.preventDefault();location.href="mailto:"+CFG.email+"?subject="+encodeURIComponent("RSVP – Graduation Celebration")+"&body="+encodeURIComponent(body())});
+document.getElementById("wa").addEventListener("click",function(){this.href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(body())});
+</script>
+</body>
+</html>
