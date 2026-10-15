@@ -85,8 +85,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
   <p class="disp">Thanksgiving &amp; Celebration</p>
   <p class="sub">A small, intimate gathering of family and a few close friends, to give thanks and celebrate this milestone together.</p>
 
-  <p class="name">JOSHUA</p>
-  <p class="deg">Diploma in Information Technology for Business<br>Uganda Institute of Information and Communications Technology</p>
+  <p class="name">OPAR JOSHUA</p>
 
   <div class="orn">✦</div>
   <p class="quote">“I could not have walked this road alone. Your presence will mean the world to me.”</p>
@@ -108,7 +107,6 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
   <div class="gift">
     <h3>Send a contribution</h3>
     <p>Mobile money — account name: <b>Nyingalingi Proscovia</b></p>
-    
     <div class="pay"><div><small>Mobile Money</small><strong>0704 529 389</strong></div><button class="copy" data-n="0704529389" type="button">Copy</button></div>
   </div>
 
@@ -123,19 +121,18 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
         <label><input type="radio" name="a" value="Yes, I will attend" checked>Joyfully accept</label>
         <label><input type="radio" name="a" value="Sorry, I cannot attend">Regretfully decline</label>
       </div></div>
-    <div><label for="c">Contribution I have sent (optional)</label><input id="c" placeholder="e.g. UGX 50,000 via MTN"></div>
+    <div><label for="c">Contribution sent: amount and method (optional)</label><input id="c" placeholder="e.g. UGX 50,000 via Mobile Money"></div>
     <div><label for="m">A word for the graduate</label><textarea id="m" rows="3" placeholder="Write a warm wish..."></textarea></div>
     <button class="btn" type="submit">Send reply by email</button>
-    <a class="btn alt" id="wa" href="#" target="_blank" rel="noopener">Reply on WhatsApp</a>
   </form>
   <p class="private">This invitation is personal to you. Because we are keeping things small, we kindly ask that you come on your own.</p>
 
-  <p class="foot">With love &amp; gratitude, Joshua</p>
+  <p class="foot">With love &amp; gratitude, Opar Joshua</p>
 </div></main>
 
 <script>
 // ===== EDIT THESE =====
-var CFG = { email:"your-email@example.com", whatsapp:"256700000000", eventDate:"2026-11-08T14:00:00+03:00" };
+var CFG = { email:"Joshuaopar7@gmail.com", whatsapp:"256700000000", eventDate:"2026-11-08T14:00:00+03:00" };
 // ======================
 var sp=document.getElementById("sp");
 for(var i=0;i<22;i++){var s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";s.style.animationDelay=(Math.random()*5)+"s";s.style.animationDuration=(3+Math.random()*4)+"s";sp.appendChild(s)}
@@ -155,8 +152,8 @@ function body(){
   var v=function(i){return document.getElementById(i).value},a=document.querySelector("input[name=a]:checked").value;
   return "RSVP – Graduation Celebration\n\nName: "+v("n")+"\nPhone: "+v("p")+"\nResponse: "+a+"\nContribution: "+(v("c")||"-")+"\nMessage: "+v("m");
 }
-document.getElementById("rsvp").addEventListener("submit",function(e){e.preventDefault();location.href="mailto:"+CFG.email+"?subject="+encodeURIComponent("RSVP – Graduation Celebration")+"&body="+encodeURIComponent(body())});
-document.getElementById("wa").addEventListener("click",function(){this.href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(body())});
+document.getElementById("rsvp").addEventListener("submit",function(e){e.preventDefault();location.href="mailto:"+CFG.email+"?subject="+encodeURIComponent("RSVP: "+document.getElementById("n").value+" - "+(document.querySelector("input[name=a]:checked").value.indexOf("Yes")===0?"ACCEPTED":"DECLINED")+(document.getElementById("c").value?" - CONTRIBUTED":""))+"&body="+encodeURIComponent(body())});
+
 </script>
 </body>
 </html>
