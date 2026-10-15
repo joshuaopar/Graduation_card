@@ -72,11 +72,30 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
 .private{margin-top:18px;font-size:15px;color:var(--muted);font-style:italic}
 .thanks{margin:16px 0 0;font-size:20px;color:var(--gold2);font-style:italic}
 .foot{margin-top:24px;font-family:var(--script);font-size:32px;color:var(--gold2);line-height:1.1}
+.welcome{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:radial-gradient(circle at 50% 30%,var(--bg2),var(--bg1) 72%);transition:opacity .9s ease}
+.welcome.gone{opacity:0;pointer-events:none}
+.welcome .cap2{font-size:64px;animation:fl 3.5s ease-in-out infinite}
+.welcome .name{margin:14px 0 0}
+.welcome .btn{width:auto;display:inline-block;padding:16px 30px;margin-top:34px}
+.welcome .hint{margin:14px 0 0;font-size:15px;color:var(--muted);font-style:italic}
+.mus{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;width:48px;height:48px;border-radius:50%;border:1px solid var(--gold);background:var(--card);color:var(--gold2);font-size:20px;cursor:pointer;display:none;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.mus.show{display:block}
 @media (max-width:420px){.script{font-size:50px}.inner{padding:34px 16px 26px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
+<div class="welcome" id="welcome">
+  <div class="cap2">🎓</div>
+  <p class="eyebrow">You are warmly invited</p>
+  <p class="script">Graduation</p>
+  <p class="disp">Thanksgiving &amp; Celebration</p>
+  <p class="name">OPAR JOSHUA</p>
+  <button class="btn" id="open" type="button">💌 Tap to open</button>
+  <p class="hint">Best enjoyed with the sound on 🔊</p>
+</div>
+<button class="mus" id="mus" type="button" aria-label="Turn music on or off">🔊</button>
+<audio id="song" src="music.mp3" loop preload="none"></audio>
 <div class="sparkles" id="sp"></div>
 <main class="card"><div class="inner">
 
@@ -93,7 +112,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
   <div class="orn">✦</div>
 
   <div class="details">
-    <div class="row"><span class="ico">📅</span><div><b>Date</b><span>Sunday, 29th November 2026</span></div></div>
+    <div class="row"><span class="ico">📅</span><div><b>Date</b><span>Sunday, 8 November 2026</span></div></div>
     <div class="row"><span class="ico">🕑</span><div><b>Time</b><span>2:00 PM – 6:00 PM</span></div></div>
     <div class="row"><span class="ico">📍</span><div><b>Venue</b><span>Kololo, Kampala</span></div></div>
     <div class="row"><span class="ico">👗</span><div><b>Dress</b><span>Smart &amp; elegant</span></div></div>
@@ -174,6 +193,65 @@ document.getElementById("rsvp").addEventListener("submit",function(e){
     msg.textContent="Sorry, your reply did not send. Please check your internet and try again.";
   });
 });
+
+// ===== Background music: plays music.mp3, or a soft built-in tune if the file is missing =====
+var AC=null,out=null,playing=false,timer=null,step=0;
+var CH=[[261.63,329.63,392.00],[246.94,293.66,392.00],[220.00,261.63,329.63],[174.61,261.63,349.23]];
+var BS=[130.81,123.47,110.00,87.31];
+function tone(f,t,dur,vol,type,att){
+  var o=AC.createOscillator(),g=AC.createGain();
+  o.type=type;o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(vol,t+att);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(g);g.connect(out);o.start(t);o.stop(t+dur+0.1);
+}
+function chord(){
+  var t=AC.currentTime+0.1,c=CH[step];
+  c.forEach(function(f){tone(f,t,7,0.05,"sine",1.6);tone(f*1.003,t,7,0.025,"triangle",1.8)});
+  tone(BS[step],t,7,0.09,"sine",1.2);
+  [0,1,2,1,0,1,2,1].forEach(function(k,i){tone(c[k]*2,t+i*0.75,2.4,0.05,"sine",0.03)});
+  step=(step+1)%CH.length;
+  timer=setTimeout(chord,6000);
+}
+function startSynth(){
+  try{
+    AC=new (window.AudioContext||window.webkitAudioContext)();
+    var lp=AC.createBiquadFilter();lp.type="lowpass";lp.frequency.value=1800;
+    var dl=AC.createDelay();dl.delayTime.value=0.45;
+    var fb=AC.createGain();fb.gain.value=0.3;
+    out=AC.createGain();out.gain.value=0.9;
+    out.connect(lp);lp.connect(AC.destination);
+    lp.connect(dl);dl.connect(fb);fb.connect(dl);dl.connect(AC.destination);
+    AC.resume();playing=true;chord();
+    document.getElementById("mus").classList.add("show");
+  }catch(e){}
+}
+var song=document.getElementById("song"),useSong=false;
+function startMusic(){
+  var b=document.getElementById("mus");
+  try{
+    song.volume=0.7;
+    var p=song.play();
+    if(p&&p.then){p.then(function(){useSong=true;b.textContent="🔊";b.classList.add("show")}).catch(startSynth)}
+    else{startSynth()}
+  }catch(e){startSynth()}
+}
+function toggleMusic(){
+  var b=document.getElementById("mus");
+  if(useSong){
+    if(song.paused){song.play();b.textContent="🔊"}else{song.pause();b.textContent="🔇"}
+    return;
+  }
+  if(!AC)return;
+  if(playing){clearTimeout(timer);AC.suspend();playing=false;b.textContent="🔇"}
+  else{AC.resume();playing=true;chord();b.textContent="🔊"}
+}
+document.getElementById("open").addEventListener("click",function(){
+  var w=document.getElementById("welcome");w.classList.add("gone");
+  setTimeout(function(){w.style.display="none"},900);startMusic();
+});
+document.getElementById("mus").addEventListener("click",toggleMusic);
 </script>
 </body>
 </html>
