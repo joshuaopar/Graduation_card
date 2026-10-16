@@ -47,8 +47,9 @@ body{margin:0;min-height:100%;color:var(--ink);font-family:var(--serif);font-siz
 .row b{display:block;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
 .row span{font-size:19px}
 .count{display:flex;justify-content:center;gap:10px}
-.count div{min-width:70px;border:1px solid var(--line);border-radius:12px;padding:8px 4px;background:var(--field)}
+.count div{min-width:110px;border:1px solid var(--line);border-radius:12px;padding:8px 4px;background:var(--field)}
 .count strong{display:block;font-family:var(--disp);font-size:26px;color:var(--gold2)}
+.togo{margin:12px 0 0;color:var(--muted);font-style:italic;font-size:16px}
 .count small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 h2{font-family:var(--script);font-weight:normal;font-size:44px;margin:0;color:var(--gold2);line-height:1.1}
 .small{color:var(--muted);font-size:16px;margin:8px auto 0;max-width:400px}
@@ -110,7 +111,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
   <div class="orn">✦</div>
 
   <div class="details">
-    <div class="row"><span class="ico">📅</span><div><b>Date</b><span>Sunday, 28 November 2026</span></div></div>
+    <div class="row"><span class="ico">📅</span><div><b>Date</b><span id="dateTxt">Saturday, 28 November 2026</span></div></div>
     <div class="row"><span class="ico">🕑</span><div><b>Time</b><span>2:00 PM – 6:00 PM</span></div></div>
     <div class="row"><span class="ico">📍</span><div><b>Venue</b><span>Kololo, Kampala</span></div></div>
     <div class="row"><span class="ico">👗</span><div><b>Dress</b><span>Smart &amp; elegant</span></div></div>
@@ -118,6 +119,7 @@ input:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
 
   <div class="orn">✦</div>
   <div class="count" id="count"></div>
+  <p class="togo" id="togo"></p>
 
   <div class="orn">✦</div>
   <h2>Support the Celebration</h2>
@@ -155,13 +157,24 @@ var CFG = { email:"Joshuaopar7@gmail.com", eventDate:"2026-11-28T14:00:00+03:00"
 // ======================
 var sp=document.getElementById("sp");
 for(var i=0;i<22;i++){var s=document.createElement("i");s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";s.style.animationDelay=(Math.random()*5)+"s";s.style.animationDuration=(3+Math.random()*4)+"s";sp.appendChild(s)}
+// Write the date on the card from the date above, so the weekday is always correct
+(function(){
+  try{
+    var P={};
+    new Intl.DateTimeFormat("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:"Africa/Kampala"})
+      .formatToParts(new Date(CFG.eventDate)).forEach(function(x){P[x.type]=x.value});
+    document.getElementById("dateTxt").textContent=P.weekday+", "+P.day+" "+P.month+" "+P.year;
+  }catch(e){}
+})();
 function tick(){
-  var d=new Date(CFG.eventDate)-new Date(),el=document.getElementById("count");
-  if(d<=0){el.textContent="It's celebration time! 🎉";return}
-  var s=Math.floor(d/1000),D=Math.floor(s/86400),H=Math.floor(s%86400/3600),M=Math.floor(s%3600/60);
-  el.innerHTML=[[D,"Days"],[H,"Hours"],[M,"Mins"]].map(function(x){return "<div><strong>"+x[0]+"</strong><small>"+x[1]+"</small></div>"}).join("");
+  var d=new Date(CFG.eventDate)-new Date(),el=document.getElementById("count"),tg=document.getElementById("togo");
+  if(d<=0){el.textContent="It's celebration time! 🎉";tg.textContent="";return}
+  var t=Math.floor(d/1000),D=Math.floor(t/86400),TH=Math.floor(t/3600),H=TH%24,M=Math.floor(t%3600/60),S=t%60;
+  var u=function(n,w){return n+" "+w+(n===1?"":"s")};
+  el.innerHTML="<div><strong>"+D+"</strong><small>Days</small></div><div><strong>"+TH.toLocaleString("en-US")+"</strong><small>Hours in total</small></div>";
+  tg.textContent=u(D,"day")+", "+u(H,"hour")+", "+u(M,"minute")+" and "+u(S,"second")+" to go";
 }
-tick();setInterval(tick,30000);
+tick();setInterval(tick,1000);
 document.querySelectorAll(".copy").forEach(function(b){b.addEventListener("click",function(){
   var n=b.getAttribute("data-n");
   try{navigator.clipboard.writeText(n).then(function(){b.textContent="Copied ✓"},function(){b.textContent=n})}catch(e){b.textContent=n}
